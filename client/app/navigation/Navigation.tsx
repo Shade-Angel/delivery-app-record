@@ -3,6 +3,7 @@ import { FC, useEffect, useState } from "react";
 import PrivateNavigator from "./PrivateNavigator";
 import BottomMenu from "@/components/ui/layout/bottom-menu/BottomMenu";
 import { useAuth } from "@/hooks/useAuth";
+import { TypeRootParamList } from "./navigation.types";
 
 
 const Navigation: FC = () => {
@@ -10,11 +11,11 @@ const Navigation: FC = () => {
 
     const [currentRoute, setCurrentRoute] = useState<string | undefined>(undefined)
 
-    const navRef = useNavigationContainerRef()
+    const navRef = useNavigationContainerRef<TypeRootParamList>()
 
     useEffect(() => {
         setCurrentRoute(navRef.getCurrentRoute()?.name)
-        
+
         const listener = navRef.addListener(
             'state',
             () => setCurrentRoute(navRef.getCurrentRoute()?.name)
