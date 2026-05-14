@@ -1,0 +1,14 @@
+import { FC } from "react";
+import { Text, View } from "react-native";
+
+const Home: FC = () => {
+    return (
+        <View>
+            <Text>
+                Home1
+            </Text>
+        </View>
+    )
+}
+
+export default Home

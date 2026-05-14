@@ -9,6 +9,7 @@ export default function EditScreenInfo({ path }: { path: string }) {
 
   return (
     <View style={styles.getStartedContainer}>
+      <Text className='bg-red-900'>Hello</Text>
       <Text style={styles.getStartedText}>{title}</Text>
       <View style={[styles.codeHighlightContainer, styles.homeScreenFilename]}>
         <Text>{path}</Text>
