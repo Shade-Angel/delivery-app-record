@@ -17,6 +17,7 @@
     "babel-plugin-root-import": "^6.6.0",
     "clsx": "^2.1.1",
     "expo": "^54.0.0",
+    "expo-splash-screen": "~31.0.13",
     "expo-status-bar": "~3.0.8",
     "nativewind": "^2.0.0",
     "react": "19.1.0",
