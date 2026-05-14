@@ -5,7 +5,7 @@ const Home: FC = () => {
     return (
         <View>
             <Text>
-                Home1
+                Home
             </Text>
         </View>
     )
