@@ -9,7 +9,8 @@ module.exports = function(api) {
         rootPathSuffix: 'app/',
         rootPathPrefix: '@/'
       }],
-      'react-native-worklets/plugin'
+      'react-native-worklets/plugin',
+      ['inline-dotenv']
     ],
   };
 };
