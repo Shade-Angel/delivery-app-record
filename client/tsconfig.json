@@ -3,6 +3,7 @@
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
     "strict": true,
+    "types": ["node"],
     "baseUrl": ".",
     "paths": {
       "@/*": ["./app/*", "./*"]
