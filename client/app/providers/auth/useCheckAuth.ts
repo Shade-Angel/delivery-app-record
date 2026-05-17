@@ -31,7 +31,7 @@ export const useCheckAuth = (routeName?: string) => {
     useEffect(() => {
         const checkRefreshToken = async () => {
             const refreshToken = await getItemAsync(EnumSecureStore.REFRESH_TOKEN)
-            if(refreshToken && user) {
+            if(!refreshToken && user) {
                 await AuthService.logout()
                 setUser(null)    
             }

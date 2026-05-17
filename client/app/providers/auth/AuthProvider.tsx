@@ -21,7 +21,7 @@ const AuthProvider: FC<PropsWithChildren<unknown>> = ({ children }) => {
                 
                 if(accessToken) {
                     const user = await getUserFromStorage()
-                    if(isMounted && user && user.id) {
+                    if(isMounted) {
                         setUser(user)
                     }
                 }
