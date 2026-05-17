@@ -19,7 +19,9 @@ export const deleteTokensStorage = async () => {
 
 export const getUserFromStorage = async () => {
     try {
-        return JSON.parse((await AsyncStorage.getItem(EnumAsyncStorage.USER)) || '{}')
+        const userData = await AsyncStorage.getItem(EnumAsyncStorage.USER)
+        if (!userData) return null 
+        return JSON.parse(userData)
     } catch (e) {
         return null
     }
@@ -27,7 +29,8 @@ export const getUserFromStorage = async () => {
 
 export const saveToStorage = async (data: IAuthResponse) => {
     await saveTokensStorage(data)
-    try{
+    try {
         await AsyncStorage.setItem(EnumAsyncStorage.USER, JSON.stringify(data.user))
-    } catch (error) {}
+    } catch (error) {
+    }
 }

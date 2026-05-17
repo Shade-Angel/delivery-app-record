@@ -6,32 +6,34 @@ import { useAuth } from "@/hooks/useAuth";
 import { TypeRootParamList } from "./navigation.types";
 import { useCheckAuth } from "@/providers/auth/useCheckAuth";
 
-
 const Navigation: FC = () => {
-    const {user} = useAuth()
-
+    const { user } = useAuth()
     const [currentRoute, setCurrentRoute] = useState<string | undefined>(undefined)
 
     const navRef = useNavigationContainerRef<TypeRootParamList>()
 
     useEffect(() => {
-        setCurrentRoute(navRef.getCurrentRoute()?.name)
+        if (navRef.isReady()) {
+            setCurrentRoute(navRef.getCurrentRoute()?.name)
+        }
 
-        const listener = navRef.addListener(
-            'state',
-            () => setCurrentRoute(navRef.getCurrentRoute()?.name)
-        )
+        const listener = navRef.addListener('state', () => {
+            setCurrentRoute(navRef.getCurrentRoute()?.name)
+        })
 
         return () => {
             navRef.removeListener('state', listener)
         }
-    }, [])
+    }, [navRef])
 
     useCheckAuth(currentRoute)
 
     return (
         <>
-            <NavigationContainer ref={navRef}>
+            <NavigationContainer 
+                ref={navRef}
+                key={user ? 'authorized' : 'unauthorized'}  // ← ← ← КЛЮЧ ЗДЕСЬ!
+            >
                 <PrivateNavigator />
             </NavigationContainer>
             {user && currentRoute && (
@@ -40,5 +42,4 @@ const Navigation: FC = () => {
         </>
     )
 }
-
 export default Navigation

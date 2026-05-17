@@ -5,6 +5,7 @@ import { FC, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Pressable, Text, View } from "react-native";
 import AuthFields from "./AuthFields";
+import { useAuthMutations } from "./useAuthMutations";
 
 const Auth: FC = () => {
     const [isReg, setIsReg] = useState(false)
@@ -13,8 +14,11 @@ const Auth: FC = () => {
         mode: 'onChange'
     })
 
+    const {isLoading, loginSync, registerSync} = useAuthMutations(reset)
+
     const onSumbit:SubmitHandler<IAuthFormData> = data => {
-        console.log(data)
+        if(isReg) registerSync(data)
+        else loginSync(data)
     }
 
     const isLoding = false
