@@ -19,9 +19,7 @@ export const deleteTokensStorage = async () => {
 
 export const getUserFromStorage = async () => {
     try {
-        const userData = await AsyncStorage.getItem(EnumAsyncStorage.USER)
-        if (!userData) return null 
-        return JSON.parse(userData)
+         return JSON.parse((await AsyncStorage.getItem(EnumAsyncStorage.USER)) || '{}')
     } catch (e) {
         return null
     }
