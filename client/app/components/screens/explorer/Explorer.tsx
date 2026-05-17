@@ -4,7 +4,7 @@ import { Text, View } from "react-native";
 const Explorer: FC = () => {
     return (
         <View>
-            <Text>Explorer</Text>
+            <Text className="bg-red-900">Explorer</Text>
         </View>
     )
 }

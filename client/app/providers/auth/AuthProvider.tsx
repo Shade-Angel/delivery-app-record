@@ -9,7 +9,8 @@ export const AuthContext = createContext({} as IContext)
 let ignore = SplashScreen.preventAutoHideAsync()
 
 const AuthProvider: FC<PropsWithChildren<unknown>> = ({ children }) => {
-    const [user, setUser] = useState<TypeUserState>({} as IUser)
+    const [user, setUser] = useState<TypeUserState>(null)
+    const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
         let isMounted = true
@@ -17,29 +18,38 @@ const AuthProvider: FC<PropsWithChildren<unknown>> = ({ children }) => {
         const checkAccessToken = async () => {
             try {
                 const accessToken = await getAccessToken()
-
+                
                 if(accessToken) {
                     const user = await getUserFromStorage()
-                    if(isMounted) setUser(user)
+                    if(isMounted && user && user.id) {
+                        setUser(user)
+                    }
                 }
-            } catch {
-
+            } catch (error) {
             } finally {
-                await SplashScreen.hideAsync()
+                if(isMounted) {
+                    setIsLoading(false)
+                    await SplashScreen.hideAsync()
+                }
             }
         }
 
-        let ignore = checkAccessToken()
+        checkAccessToken()
 
         return () => {
             isMounted = false
         }
     }, [])
 
+    if (isLoading) {
+        return null
+    }
 
-    return <AuthContext.Provider value={{user, setUser}}>
-        {children}
-    </AuthContext.Provider>
+    return (
+        <AuthContext.Provider value={{user, setUser}}>
+            {children}
+        </AuthContext.Provider>
+    )
 }
 
 export default AuthProvider

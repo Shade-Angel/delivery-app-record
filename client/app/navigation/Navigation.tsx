@@ -32,12 +32,16 @@ const Navigation: FC = () => {
         <>
             <NavigationContainer 
                 ref={navRef}
-                key={user ? 'authorized' : 'unauthorized'}  // ← ← ← КЛЮЧ ЗДЕСЬ!
+                key={user ? 'authorized' : 'unauthorized'} 
             >
                 <PrivateNavigator />
             </NavigationContainer>
             {user && currentRoute && (
-                <BottomMenu nav={navRef.navigate} currentRoute={currentRoute} />
+                <BottomMenu 
+                    key={currentRoute}
+                    nav={navRef.navigate}
+                    currentRoute={currentRoute} 
+                />
             )}
         </>
     )
