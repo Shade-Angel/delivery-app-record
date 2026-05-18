@@ -7,6 +7,7 @@ export type TypeRootParamList = {
     Search: undefined
     Explorer: undefined
     Profile: undefined
+    Cart: undefined
 }
 
 export interface IRoute {

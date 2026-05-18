@@ -1,13 +1,14 @@
+import Layout from "@/components/layout/Layout";
 import { FC } from "react";
-import { Text, View } from "react-native";
+import Header from "./Header";
+import Banner from "./banner/Banner";
 
 const Home: FC = () => {
     return (
-        <View>
-            <Text>
-                Home
-            </Text>
-        </View>
+        <Layout>
+            <Header />
+            <Banner />
+        </Layout>
     )
 }
 
