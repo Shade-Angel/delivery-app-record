@@ -1,7 +1,7 @@
 import { NavigationContainer, useNavigationContainerRef } from "@react-navigation/native";
 import { FC, useEffect, useState } from "react";
 import PrivateNavigator from "./PrivateNavigator";
-import BottomMenu from "@/components/ui/layout/bottom-menu/BottomMenu";
+import BottomMenu from "@/components/layout/bottom-menu/BottomMenu";
 import { useAuth } from "@/hooks/useAuth";
 import { TypeRootParamList } from "./navigation.types";
 import { useCheckAuth } from "@/providers/auth/useCheckAuth";
