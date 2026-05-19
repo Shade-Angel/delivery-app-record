@@ -1,5 +1,4 @@
 import { FC } from "react";
-import { Text, View } from "react-native";
 import { useProducts } from "./useProducts";
 import Loader from "@/components/ui/Loader";
 import Catalog from "@/components/ui/catalog/Catalog";
