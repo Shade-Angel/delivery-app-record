@@ -3,6 +3,7 @@ import { FC } from "react";
 import Header from "./Header";
 import Banner from "./banner/Banner";
 import Categories from "./categories/Categories";
+import Products from "./products/Products";
 
 const Home: FC = () => {
     return (
@@ -10,6 +11,7 @@ const Home: FC = () => {
             <Header />
             <Banner />
             <Categories />
+            <Products />
         </Layout>
     )
 }
