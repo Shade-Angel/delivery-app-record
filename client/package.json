@@ -24,6 +24,7 @@
     "expo-secure-store": "~15.0.8",
     "expo-splash-screen": "~31.0.13",
     "expo-status-bar": "~3.0.8",
+    "lucide-react": "^1.16.0",
     "nativewind": "^2.0.0",
     "react": "19.1.0",
     "react-hook-form": "^7.75.0",
