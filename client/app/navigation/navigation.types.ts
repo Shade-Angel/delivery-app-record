@@ -8,6 +8,9 @@ export type TypeRootParamList = {
     Explorer: undefined
     Profile: undefined
     Cart: undefined
+    Category: {
+        slug: string
+    }
 }
 
 export interface IRoute {
