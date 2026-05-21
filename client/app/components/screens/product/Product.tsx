@@ -5,6 +5,8 @@ import Layout from "@/components/layout/Layout";
 import { getMediaSource } from "@/utils/getMediaSource";
 import Loader from "@/components/ui/Loader";
 import ProductHeader from "./ProductHeader";
+import ProductInfo from "./product-info/ProductInfo";
+import AddToCartButton from "./product-info/AddToCartButton";
 
 const Product: FC = () => {
     const {isLoading, product} = useProduct()
@@ -21,6 +23,8 @@ const Product: FC = () => {
                     height={260}
                 />
             </View>
+            <ProductInfo product={product}/>
+            <AddToCartButton productId={product.id}/>
         </Layout>
     )
 }

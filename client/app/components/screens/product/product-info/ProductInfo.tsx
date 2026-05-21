@@ -1,8 +1,21 @@
 import { FC } from "react"
+import { Text, View } from "react-native"
+import { IProductComponent } from "../product-page.interface"
+import { converPrice } from "@/utils/converPrice"
 
-const ProductInfo: FC = () => {
+const ProductInfo: FC<IProductComponent> = ({product}) => {
     return (
-        null
+        <View className="mt-7">
+            <Text className="font-bold text-2xl">
+                {product.name}
+            </Text>
+            <Text className="mt-2 text-base opacity-70">
+                {product.description}
+            </Text>
+            <Text className="mt-6 text-3xl font-semibold text-[#52AA47]">
+                {converPrice(product.price)}
+            </Text>
+        </View>
     )
 }
 

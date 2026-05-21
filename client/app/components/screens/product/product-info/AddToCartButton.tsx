@@ -1,8 +1,13 @@
+import Button from "@/components/ui/button/Button"
 import { FC } from "react"
 
-const AddToCartButton: FC = () => {
+interface IAddToCartButton {
+    productId: string
+}
+
+const AddToCartButton: FC<IAddToCartButton> = ({productId}) => {
     return (
-        null
+        <Button className="mt-6">Add to cart</Button>
     )
 }
 
