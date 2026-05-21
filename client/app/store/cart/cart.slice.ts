@@ -15,11 +15,12 @@ export const cartSlice = createSlice({
                 item => item.product.id === action.payload.product.id
             )
 
-            const newId = Date.now()
-
-            if(!isExist) state.items.push({...action.payload, id: newId})
+            if(!isExist) state.items.push({
+                ...action.payload, 
+                id: state.items.length.toString()
+            })
         },
-        removeFromCart: (state, action: PayloadAction<{id: number}>) => {
+        removeFromCart: (state, action: PayloadAction<{id: string}>) => {
             state.items = state.items.filter(
                 item => item.id !== action.payload.id
             )
