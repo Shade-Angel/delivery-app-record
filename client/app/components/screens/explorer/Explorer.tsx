@@ -1,11 +1,20 @@
+import Layout from "@/components/layout/Layout";
 import { FC } from "react";
-import { Text, View } from "react-native";
+import { useGetAllProducts } from "./useGetAllProducts";
+import Loader from "@/components/ui/Loader";
+import Catalog from "@/components/ui/catalog/Catalog";
 
 const Explorer: FC = () => {
+    const {products, isLoading} = useGetAllProducts()
+
     return (
-        <View>
-            <Text className="bg-red-900">Explorer</Text>
-        </View>
+        <Layout>
+            {isLoading ? (
+                <Loader />
+            ): (
+                <Catalog title="Explorer" products={products || []} />
+            )}
+        </Layout>
     )
 }
 

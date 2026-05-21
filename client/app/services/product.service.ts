@@ -14,12 +14,12 @@ export const ProductService = {
          })
     },
     async getBySlug(slug: string) {
-        return request<IProduct[]>({
+        return request<IProduct>({
             url: getProductsUrl(`/by-slug/${slug}`),
             method: 'GET'
         })
     },
-    async getByCategories(categorySlug: string) {
+    async getByCategory(categorySlug: string) {
         return request<IProduct[]>({
             url: getProductsUrl(`/by-category/${categorySlug}`),
             method: 'GET',

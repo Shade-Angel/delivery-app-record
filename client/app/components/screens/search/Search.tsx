@@ -1,6 +1,6 @@
 import Layout from "@/components/layout/Layout";
 import { FC } from "react";
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import { useSearch } from "./useSearch";
 import Heading from "@/components/ui/Heading";
 import Field from "@/components/ui/field/Field";
@@ -22,7 +22,7 @@ const Search: FC = () => {
             </View>
             {!!searcTerm ? (
                 <View className="mt-2">
-                    {isLoading ? <Loader /> : <Catalog products={products || []}/>} 
+                    {isLoading ? <Loader /> : (<Catalog products={products || []}/>)} 
                 </View>
             ): null}
         </Layout>
