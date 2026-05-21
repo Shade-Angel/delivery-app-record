@@ -19,7 +19,7 @@ const AddToCartButton: FC<IAddToCartButton> = ({product}) => {
 
     return (
         <Button
-            onPress={() => currentElement ? removeFromCart({id: product.id}) : addToCart({
+            onPress={() => currentElement ? removeFromCart({id: currentElement.id}) : addToCart({
                 product, quantity: 1, price: product.price
             })}
             className="mt-6"

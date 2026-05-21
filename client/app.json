@@ -11,7 +11,13 @@
     },
     "plugins": [
       "expo-secure-store",
-      "@stripe/stripe-react-native"
+      [
+        "@stripe/stripe-react-native",
+        {
+          "merchantIdentifier": "merchant.com.mydeliveryapp.client",
+          "publishableKey": "process.env.EXPO_PUBLIC_STRIPE_PUBLISHABLE_KEY"
+        }
+      ]
     ],
     "orientation": "portrait",
     "icon": "./assets/icon.png",

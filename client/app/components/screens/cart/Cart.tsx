@@ -1,11 +1,35 @@
+import Layout from "@/components/layout/Layout";
+import Button from "@/components/ui/button/Button";
+import Heading from "@/components/ui/Heading";
+import { useCart } from "@/hooks/useCart";
+import { converPrice } from "@/utils/converPrice";
 import { FC } from "react";
 import { Text, View } from "react-native";
+import CartItem from "./cart-item/CartItem";
 
 const Cart: FC = () => {
+    const {items, total} = useCart()
+
     return (
-        <View>
-            <Text>Cart</Text>
-        </View>
+        <>
+            <Layout>
+                <Heading>Cart</Heading>
+
+                {items.length ? (
+                    items.map(item => <CartItem key={item.id} item={item}/>)
+                ):(
+                    <Text className="mt-2">Product not  found</Text>
+                )}
+            </Layout>
+            {items.length ? (
+                <View className="bottom-8 absolute w-[90%] mx-5">
+                    <Text className="font-bold text-xl">
+                        Total: {converPrice(total)}
+                    </Text>
+                    <Button onPress={() => {}}>Place order</Button>
+                </View>
+            ) : null}
+        </>
     )
 }
 
