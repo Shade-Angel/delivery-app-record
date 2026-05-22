@@ -38,10 +38,11 @@ model Product {
   image       String
 
   category   Category? @relation(fields: [categoryId], references: [id])
-  categoryId String?
+  categoryId String?   @map("category_id")
 
-  user       User?     @relation(fields: [userId], references: [id])
-  userId     String?
+  user       User?       @relation(fields: [userId], references: [id])
+  userId     String?     @map("user_id")
+  orderItems OredrItem[]
 
   @@map("product")
 }
@@ -65,10 +66,27 @@ model Order {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  reference String @unique
-
-  user   User?  @relation(fields: [userId], references: [id])
-  userId String
+  items  OredrItem[]
+  total  Int
+  user   User?       @relation(fields: [userId], references: [id])
+  userId String?     @map("user_id")
 
   @@map("order")
+}
+
+model OredrItem {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  quantity Int
+  price    Int
+
+  order   Order?  @relation(fields: [orderId], references: [id])
+  orderId String? @map("order_id")
+
+  product   Product? @relation(fields: [productId], references: [id])
+  productId String?  @map("product_id")
+
+  @@map("oreder_item")
 }
