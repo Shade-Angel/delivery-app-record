@@ -1,16 +1,15 @@
-import { Injectable } from '@nestjs/common';
-import { returnProductObject } from 'src/product/return-product.object';
-import { PrismaService } from 'src/utisl/prisma.service';
-import { Stripe } from 'stripe';
-import { OrderDto } from './dto/order.dto';
-import { create } from 'domain';
+import { Injectable } from '@nestjs/common'
+import { returnProductObject } from 'src/product/return-product.object'
+import { PrismaService } from 'src/utisl/prisma.service'
+import Stripe from 'stripe'
+import { OrderDto } from './dto/order.dto'
 
 @Injectable()
 export class OrderService {
-	private stripe: Stripe
+	private stripe: InstanceType<typeof Stripe>
 
 	constructor(private prisma: PrismaService) {
-		this.stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
+		this.stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
 	}
 
 	async getAll() {
@@ -56,7 +55,7 @@ export class OrderService {
 			throw new Error('Amount must be at least $0.50 usd')
 		}
 
-        const order = await this.prisma.order.create({
+		const order = await this.prisma.order.create({
 			data: {
 				items: {
 					create: dto.items
@@ -67,5 +66,18 @@ export class OrderService {
 				}
 			}
 		})
+
+		const totalInCents = Math.round(total * 100)
+
+		const paymentIntent = await this.stripe.paymentIntents.create({
+			amount: totalInCents,
+			currency: 'usd',
+			automatic_payment_methods: {
+				enabled: true
+			},
+			description: `Order by userId ${order.userId}`
+		})
+
+		return { clientSecret: paymentIntent.client_secret }
 	}
 }

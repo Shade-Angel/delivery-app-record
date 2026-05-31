@@ -15,10 +15,11 @@ export const cartSlice = createSlice({
                 item => item.product.id === action.payload.product.id
             )
 
-            if(!isExist) state.items.push({
-                ...action.payload, 
-                id: state.items.length.toString()
-            })
+            if(!isExist) 
+                state.items.push({
+                    ...action.payload, 
+                    id: state.items.length.toString()
+                })
         },
         removeFromCart: (state, action: PayloadAction<{id: string}>) => {
             state.items = state.items.filter(
@@ -31,7 +32,13 @@ export const cartSlice = createSlice({
         ) => {
             const {id, type} = action.payload
             const item = state.items.find(item => item.id === id)
-            if(item) type === 'plus' ? item.quantity++ : item.quantity--
+            if (item) {
+                if (type === 'plus') {
+                    item.quantity++
+                } else {
+                    item.quantity--
+                }
+            }
         },
         reset: state => {
             state.items = []

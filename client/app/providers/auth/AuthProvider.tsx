@@ -6,7 +6,7 @@ import { getAccessToken, getUserFromStorage } from "@/services/auth/auth.helper"
 
 export const AuthContext = createContext({} as IContext)
 
-let ignore = SplashScreen.preventAutoHideAsync()
+let _ignore = SplashScreen.preventAutoHideAsync()
 
 const AuthProvider: FC<PropsWithChildren<unknown>> = ({ children }) => {
     const [user, setUser] = useState<TypeUserState>({} as IUser)
@@ -26,6 +26,7 @@ const AuthProvider: FC<PropsWithChildren<unknown>> = ({ children }) => {
                     }
                 }
             } catch (error) {
+                console.error(error)
             } finally {
                 if(isMounted) {
                     setIsLoading(false)

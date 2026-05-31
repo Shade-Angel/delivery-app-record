@@ -6,9 +6,12 @@ import { converPrice } from "@/utils/converPrice";
 import { FC } from "react";
 import { Text, View } from "react-native";
 import CartItem from "./cart-item/CartItem";
+import { useCheckout } from "./useCheckout";
 
 const Cart: FC = () => {
     const {items, total} = useCart()
+
+    const {onCheckout} = useCheckout()
 
     return (
         <>
@@ -26,7 +29,7 @@ const Cart: FC = () => {
                     <Text className="font-bold text-xl">
                         Total: {converPrice(total)}
                     </Text>
-                    <Button onPress={() => {}}>Place order</Button>
+                    <Button onPress={() => onCheckout()}>Place order</Button>
                 </View>
             ) : null}
         </>

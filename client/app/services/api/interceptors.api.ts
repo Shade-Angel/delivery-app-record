@@ -4,6 +4,7 @@ import { deleteTokensStorage, getAccessToken } from "../auth/auth.helper";
 import { errorCatch } from "./error.api";
 import { getNewTokens } from "./helper.auth";
 
+// eslint-disable-next-line import/no-named-as-default-member
 const instance = axios.create({
     baseURL: API_URL,
     headers: {

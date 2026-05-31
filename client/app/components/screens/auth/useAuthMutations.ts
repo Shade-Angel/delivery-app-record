@@ -29,6 +29,6 @@ export const useAuthMutations = (reset: UseFormReset<IAuthFormData>) => {
     return useMemo(() => ({
         loginSync, registerSync, isLoading: isLoginLoading || isRegisterLoading
     }), [
-        isLoginLoading, isRegisterLoading
+        isLoginLoading, isRegisterLoading, loginSync, registerSync
     ])
 }

@@ -14,7 +14,7 @@ const Auth: FC = () => {
         mode: 'onChange'
     })
 
-    const {isLoading, loginSync, registerSync} = useAuthMutations(reset)
+    const { loginSync, registerSync} = useAuthMutations(reset)
 
     const onSumbit:SubmitHandler<IAuthFormData> = data => {
         if(isReg) registerSync(data)

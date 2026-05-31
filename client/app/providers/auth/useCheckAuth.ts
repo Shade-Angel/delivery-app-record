@@ -26,7 +26,7 @@ export const useCheckAuth = (routeName?: string) => {
         }
 
         let ignore = checkAccessToken()
-    }, [])
+    }, [setUser])
 
     useEffect(() => {
         const checkRefreshToken = async () => {
@@ -38,5 +38,5 @@ export const useCheckAuth = (routeName?: string) => {
         }
 
         let ignore = checkRefreshToken()
-    }, [routeName])
+    }, [routeName, setUser, user])
 }

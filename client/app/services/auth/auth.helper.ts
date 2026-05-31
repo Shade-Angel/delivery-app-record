@@ -21,6 +21,7 @@ export const getUserFromStorage = async () => {
     try {
          return JSON.parse((await AsyncStorage.getItem(EnumAsyncStorage.USER)) || '{}')
     } catch (e) {
+        console.error(e)
         return null
     }
 }
@@ -30,5 +31,6 @@ export const saveToStorage = async (data: IAuthResponse) => {
     try {
         await AsyncStorage.setItem(EnumAsyncStorage.USER, JSON.stringify(data.user))
     } catch (error) {
+        console.error(error)
     }
 }

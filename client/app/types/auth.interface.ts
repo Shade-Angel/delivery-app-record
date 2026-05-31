@@ -1,6 +1,6 @@
 import { IUser } from "./user.interface";
 
-export interface IAuthFormData extends Pick<IUser, 'email' | 'password'> {}
+export type IAuthFormData = Pick<IUser, 'email' | 'password'>
 
 export enum EnumSecureStore {
     ACCESS_TOKEN = 'accessToken',
