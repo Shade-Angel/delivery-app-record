@@ -1,6 +1,9 @@
 export const converPrice = (price: number) => {
-    return price.toLocaleString('en-US', {
+    const dolar = price / 100
+    return dolar.toLocaleString('en-US', {
         style: 'currency',
-        currency: 'USD'
+        currency: 'USD',
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
     })
 }

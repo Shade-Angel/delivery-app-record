@@ -17,7 +17,7 @@ const Banner: FC = () => {
                     className="bg-black py-2 rounded-full w-28 mt-4"
                 >
                     <Text className="text-white font-medium text-center">
-                        Oreder now
+                        Order now
                     </Text>
                 </Pressable>
             </View>

@@ -69,11 +69,15 @@ async function main() {
 
 	const catMap: Record<string, string> = {}
 	for (const c of categories) {
-		const safeSlug = toSlug(c.name)
+		// Используем латинский slug напрямую, без toSlug
 		const { id } = await prisma.category.upsert({
-			where: { slug: safeSlug },
+			where: { slug: c.slug }, // c.slug = 'buckets', 'burgers' и т.д.
 			update: {},
-			create: { name: sanitize(c.name), slug: safeSlug, image: c.image }
+			create: {
+				name: sanitize(c.name),
+				slug: c.slug,
+				image: c.image
+			}
 		})
 		catMap[c.slug] = id
 	}
@@ -83,55 +87,79 @@ async function main() {
 			name: 'Баскет Дуэт',
 			cat: 'buckets',
 			desc: '8 стрипсов, 2 ножки, 2 крыла',
-			price: 89900
+			price: 950
 		},
 		{
 			name: 'Баскет L',
 			cat: 'buckets',
 			desc: '16 кусочков курицы',
-			price: 149900
+			price: 1295
 		},
 		{
 			name: 'Шефбургер Оригинальный',
 			cat: 'burgers',
 			desc: 'Филе, овощи, соус',
-			price: 34900
+			price: 200
 		},
 		{
 			name: 'Шефбургер Де Люкс',
 			cat: 'burgers',
 			desc: 'Двойное филе, бекон, чеддер',
-			price: 39900
+			price: 300
 		},
 		{
 			name: 'Твистер',
 			cat: 'burgers',
 			desc: 'Стрипсы в лепёшке',
-			price: 29900
+			price: 200
 		},
 		{
-			name: 'Картофель фри (Б)',
+			name: 'Картофель фри',
 			cat: 'sides',
 			desc: 'Золотистый картофель',
-			price: 14900
+			price: 349
+		},
+		{
+			name: 'Стрипцы',
+			cat: 'sides',
+			desc: 'Нежная, мягкая курица',
+			price: 514
 		},
 		{
 			name: 'Кока-Кола 0.5 л',
 			cat: 'drinks',
 			desc: 'Классический вкус',
-			price: 9900
+			price: 125
+		},
+		{
+			name: 'Кофе Американо',
+			cat: 'drinks',
+			desc: 'Классический зерновой кофе',
+			price: 211
+		},
+		{
+			name: 'Сок яблочный',
+			cat: 'drinks',
+			desc: 'В меру сладкий напиток с приятной освежающей кислинкой',
+			price: 100
 		},
 		{
 			name: 'Мороженое Рожок',
 			cat: 'desserts',
 			desc: 'Ванильное в рожке',
-			price: 7900
+			price: 75
+		},
+		{
+			name: 'Пирожок с вишней',
+			cat: 'desserts',
+			desc: 'горячий пирожок с фруктовой начинкой',
+			price: 56
 		},
 		{
 			name: 'Комбо 1',
 			cat: 'combos',
 			desc: 'Бургер + Фри + Напиток',
-			price: 49900
+			price: 511
 		}
 	]
 
@@ -145,7 +173,7 @@ async function main() {
 				slug: safeSlug,
 				description: sanitize(p.desc),
 				price: p.price,
-				image: `/images/products/${safeSlug}.jpg`,
+				image: `/uploads/images/products/${safeSlug}.jpg`,
 				categoryId: catMap[p.cat]
 			}
 		})
