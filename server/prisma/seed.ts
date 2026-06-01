@@ -46,7 +46,7 @@ async function main() {
 			image: '/uploads/images/categories/burgers.png'
 		},
 		{
-			name: 'Снеки и гарниры',
+			name: 'Снеки',
 			slug: 'sides',
 			image: '/uploads/images/categories/sides.png'
 		},

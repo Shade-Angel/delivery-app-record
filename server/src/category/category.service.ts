@@ -8,10 +8,21 @@ import { CategoryDto } from './dto/category.dto'
 export class CategoryService {
 	constructor(private prisma: PrismaService) {}
 
+	private addUploadsPrefix(imagePath: string): string {
+		if (!imagePath) return ''
+		if (imagePath.startsWith('/uploads/')) return imagePath
+		if (imagePath.startsWith('/')) return `/uploads${imagePath}`
+		return `/uploads/${imagePath}`
+	}
+
 	async getAll() {
-		return this.prisma.category.findMany({
+		const categories = await this.prisma.category.findMany({
 			select: returnCategoryObject
 		})
+		return categories.map(category => ({
+			...category,
+			image: this.addUploadsPrefix(category.image)
+		}))
 	}
 
 	async byId(id: string) {
