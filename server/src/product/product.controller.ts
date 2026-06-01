@@ -30,7 +30,7 @@ export class ProductController {
 		return this.productService.bySlug(slug)
 	}
 
-	@Get('by-categort/:categorySlug')
+	@Get('by-category/:categorySlug')
 	async getProductsByCategory(@Param('categorySlug') categorySlug: string) {
 		return this.productService.byCategory(categorySlug)
 	}
