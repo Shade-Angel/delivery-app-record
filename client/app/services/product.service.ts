@@ -4,8 +4,6 @@ import { getProductsUrl } from "@/config/api.config"
 
 export const ProductService = {
     async getAll(searcTerm?: string) {
-        const url = getProductsUrl('')
-        console.log('[ProductService] Request URL:', url) 
         return request<IProduct[]>({
             url: getProductsUrl(''),
             method: 'GET',

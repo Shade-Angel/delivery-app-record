@@ -4,6 +4,8 @@ import { getUsersUrl } from "@/config/api.config"
 
 export const UserService = {
     async getProfile() {
+        const url = getUsersUrl('/profile');
+        console.log('[UserService] Request URL:', url);
         return request<IUser>({
             url: getUsersUrl('/profile'),
             method: 'GET'

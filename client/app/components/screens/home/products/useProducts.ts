@@ -8,7 +8,5 @@ export const useProducts = () => {
         select: data => data.slice(0, 4)
     })
 
-    console.log('[useProducts] products:', products)   // 👈 лог
-    console.log('[useProducts] error:', error) 
     return { products, isLoading }
 }

@@ -5,7 +5,9 @@ import { deleteTokensStorage, saveToStorage } from "./auth.helper"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 
 export const AuthService = {
+    
     async main(variant: 'reg' | 'login', email: string, password: string) {
+        console.log('[AuthService] Request to', variant, email)
         const response = await request<IAuthResponse>({
             url: getAuthUrl(`/${variant === 'reg' ? 'register' : 'login'}`),
             method: 'POST',
