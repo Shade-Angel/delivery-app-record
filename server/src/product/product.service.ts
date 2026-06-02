@@ -13,6 +13,7 @@ export class ProductService {
 	) {}
 
 	async getAll(searchTerm?: string) {
+		console.log('[Service] searchTerm:', searchTerm)
 		if (searchTerm) return this.search(searchTerm)
 
 		return this.prisma.product.findMany({

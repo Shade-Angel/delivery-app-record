@@ -3,13 +3,13 @@ import { request } from "./api/request.api"
 import { getProductsUrl } from "@/config/api.config"
 
 export const ProductService = {
-    async getAll(searcTerm?: string) {
+    async getAll(searchTerm?: string) {
         return request<IProduct[]>({
             url: getProductsUrl(''),
             method: 'GET',
-            params: searcTerm 
+            params: searchTerm 
             ? {
-                searcTerm
+                searchTerm
             } : {}
          })
     },

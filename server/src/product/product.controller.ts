@@ -22,6 +22,7 @@ export class ProductController {
 	@UsePipes(new ValidationPipe())
 	@Get()
 	async getAll(@Query('searchTerm') searchTerm?: string) {
+		console.log('[Server] searchTerm:', searchTerm)
 		return this.productService.getAll(searchTerm)
 	}
 

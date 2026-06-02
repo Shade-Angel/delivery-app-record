@@ -9,7 +9,7 @@ import Loader from "@/components/ui/Loader";
 import Catalog from "@/components/ui/catalog/Catalog";
 
 const Search: FC = () => {
-    const {searcTerm, isLoading, control, products} = useSearch()
+    const {searchTerm, isLoading, control, products} = useSearch()
 
     return (
         <Layout>
@@ -20,7 +20,7 @@ const Search: FC = () => {
                     placeholder='Type something...' control={control} name="searchTerm" keyboardType="web-search" 
                 />
             </View>
-            {!!searcTerm ? (
+            {!!searchTerm ? (
                 <View className="mt-2">
                     {isLoading ? <Loader /> : (<Catalog products={products || []}/>)} 
                 </View>
