@@ -1,49 +1,53 @@
-import { API_URL } from "@/config/api.config";
-import axios from "axios";
-import { deleteTokensStorage, getAccessToken } from "../auth/auth.helper";
-import { errorCatch } from "./error.api";
-import { getNewTokens } from "./helper.auth";
+import axios from 'axios'
+
+import { API_URL } from '@/config/api.config'
+
+import { deleteTokensStorage, getAccessToken } from '../auth/auth.helper'
+
+import { errorCatch } from './error.api'
+import { getNewTokens } from './helper.auth'
 
 // eslint-disable-next-line import/no-named-as-default-member
 const instance = axios.create({
-    baseURL: API_URL,
-    headers: {
-        'Content-Type': 'application/json'
-    }
+	baseURL: API_URL,
+	headers: {
+		'Content-Type': 'application/json'
+	}
 })
 
-instance.interceptors.request.use(async (config) => {
-    const accesToken = await getAccessToken()
-    
-    if (config.headers && accesToken)
-        config.headers.Authorization = `Bearer ${accesToken}`
+instance.interceptors.request.use(async config => {
+	const accesToken = await getAccessToken()
 
-    return config
+	if (config.headers && accesToken)
+		config.headers.Authorization = `Bearer ${accesToken}`
+
+	return config
 })
 
 instance.interceptors.response.use(
-    config => config,
-    async error => {
-        const originalRequest = error.config
+	config => config,
+	async error => {
+		const originalRequest = error.config
 
-        if(
-            (error.response.status === 401 ||
-                errorCatch(error) === 'jwt expired' ||
-                errorCatch(error) ===  'jwt must be provided') &&
-            error.config &&
-            !error.config._isRetry
-        ) {
-            originalRequest._isRetry = true
-            try {
-                await getNewTokens()
-                return instance.request(originalRequest)
-            } catch (error) {
-                if(errorCatch(error) === 'jwt expired')
-                    await deleteTokensStorage()
-            }
-        }
-        throw error
-    }
+		if (
+			(error.response.status === 401 ||
+				(error.response.status === 500 &&
+					errorCatch(error).includes('invalid token')) ||
+				errorCatch(error).includes('jwt expired')) &&
+			error.config &&
+			!error.config._isRetry
+		) {
+			originalRequest._isRetry = true
+			try {
+				await getNewTokens()
+				return instance.request(originalRequest)
+			} catch (error) {
+				if (errorCatch(error) === 'jwt expired')
+					await deleteTokensStorage()
+			}
+		}
+		throw error
+	}
 )
 
 export default instance

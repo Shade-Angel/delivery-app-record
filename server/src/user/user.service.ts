@@ -8,6 +8,7 @@ export class UserService {
 	constructor(private prisma: PrismaService) {}
 
 	async getById(id: string, selectObject: Prisma.UserSelect = {}) {
+		console.log('[UserService] getById called with id:', id)
 		const user = await this.prisma.user.findUnique({
 			where: {
 				id
@@ -31,9 +32,9 @@ export class UserService {
 				...selectObject
 			}
 		})
-
+		console.log('[UserService] user found:', !!user)
 		if (!user) {
-			throw new Error('User not found')
+			throw new NotFoundException('User not found')
 		}
 
 		return user

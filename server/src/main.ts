@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core'
 import { NestExpressApplication } from '@nestjs/platform-express'
 import { join } from 'path' // 🔥 ДОБАВЬТЕ ЭТОТ ИМПОРТ
 import { AppModule } from './utisl/app.module'
+import { TokenExpiredFilter } from './utisl/http-exception.filter'
 
 async function bootstrap() {
 	const app = await NestFactory.create<NestExpressApplication>(AppModule)
@@ -13,6 +14,7 @@ async function bootstrap() {
 	app.setGlobalPrefix('api')
 	app.enableCors()
 
+	app.useGlobalFilters(new TokenExpiredFilter())
 	const port = process.env.PORT || 4200 // 🔥 ОБЪЯВИТЕ ПЕРЕМЕННУЮ
 	await app.listen(port)
 

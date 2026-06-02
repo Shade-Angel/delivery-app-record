@@ -1,7 +1,7 @@
 import { Controller, Get, HttpCode, Param, Patch } from '@nestjs/common'
 import { UserService } from './user.service'
-import { Auth } from 'src/auth/decorators/auth.decorator'
-import { CurrentUser } from 'src/auth/decorators/user.decorator'
+import { Auth } from '../auth/decorators/auth.decorator'
+import { CurrentUser } from '../auth/decorators/user.decorator'
 
 @Controller('users')
 export class UserController {
@@ -10,7 +10,8 @@ export class UserController {
 	@Get('profile')
 	@Auth()
 	async getProfile(@CurrentUser('id') id: string) {
-		return this.userService.getById(id)
+		// ✅ Исправлено: добавлен второй параметр (пустой объект)
+		return this.userService.getById(id, {})
 	}
 
 	@HttpCode(200)
