@@ -46,12 +46,13 @@ export class OrderService {
 	}
 
 	async placeOrder(dto: OrderDto, userId: string) {
+		console.log('[OrderService] placeOrder called for user:', userId)
 		const total = dto.items.reduce(
 			(acc, item) => acc + item.price * item.quantity,
 			0
 		)
-
-		if (total < 0.5) {
+		console.log('[OrderService] total:', total)
+		if (total < 50) {
 			throw new Error('Amount must be at least $0.50 usd')
 		}
 
@@ -66,8 +67,8 @@ export class OrderService {
 				}
 			}
 		})
-
-		const totalInCents = Math.round(total * 100)
+		console.log('[OrderService] order created with id:', order.id)
+		const totalInCents = total
 
 		const paymentIntent = await this.stripe.paymentIntents.create({
 			amount: totalInCents,
@@ -77,7 +78,7 @@ export class OrderService {
 			},
 			description: `Order by userId ${order.userId}`
 		})
-
+		console.log('[OrderService] paymentIntent created:', paymentIntent.id)
 		return { clientSecret: paymentIntent.client_secret }
 	}
 }

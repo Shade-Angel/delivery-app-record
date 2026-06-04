@@ -23,9 +23,11 @@ export const useCheckout = () => {
         })
     })
 
+    
     const onCheckout = async () => {
         try {
             const {clientSecret} = await placeOrder()
+            console.log('[useCheckout] clientSecret received:', clientSecret);
 
             const {error} = await initPaymentSheet({
                 merchantDisplayName: 'Your Merchant Name',
