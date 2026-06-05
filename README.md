@@ -14,22 +14,22 @@
 ##  Структура проекта
 
 ### Клиент
-<img width="auto" heigth="auto" src="./images/WidthViewClient.png"> [!Клиент]
+<img width="auto" heigth="auto" src="./images/WidthViewClient.png"> 
 
 Папка app <br>
 <img width="auto" heigth="auto" src="./images/Folder_app.png">
 
-delivery-app-record/
-├── client/ # React Native (Expo) клиент
-│ ├── app/
-│ │ ├── components/ # UI-компоненты (категории, продукты, корзина, поиск и другие скрины)
-│ │ ├── config/ # Определяет базовые URL для API и вспомогательные функции для построения эндпоинтов.
-│ │ ├── navigation/ # Настройка навигации (стек, вкладки)
-│ │ ├── providers/ # Провайдеры (Auth, Stripe, Redux)
-│ │ ├── services/ # API-клиенты (order, auth, product)
-│ │ ├── store/ # Redux store + slices (корзина, избранное)
-│ │ ├── types/ # TypeScript интерфейсы (auth, user)
-│ │ └── utils/ # Утилиты (converPrice, getMediaSource)
+delivery-app-record/<br>
+├── client/ # React Native (Expo) клиент<br>
+│ ├── app/<br>
+│ │ ├── components/ # UI-компоненты (категории, продукты, корзина, поиск и другие скрины)<br>
+│ │ ├── config/ # Определяет базовые URL для API и вспомогательные функции для построения эндпоинтов.<br>
+│ │ ├── navigation/ # Настройка навигации (стек, вкладки)<br>
+│ │ ├── providers/ # Провайдеры (Auth, Stripe, Redux)<br>
+│ │ ├── services/ # API-клиенты (order, auth, product)<br>
+│ │ ├── store/ # Redux store + slices (корзина, избранное)<br>
+│ │ ├── types/ # TypeScript интерфейсы (auth, user)<br>
+│ │ └── utils/ # Утилиты (converPrice, getMediaSource)<br>
 
 Файлы и структура 
 
@@ -66,10 +66,10 @@ delivery-app-record/
 
 * Экраны:
 
-- - auth/Auth.tsx – форма входа/регистрации.
-- - home/Home.tsx – главный экран (Header, Banner, Categories, Products).
-- - cart/Cart.tsx – корзина, кнопка оформления заказа.
-- - profile/Profile.tsx – профиль, кнопка Logout, избранное.
+* - auth/Auth.tsx – форма входа/регистрации.
+* - home/Home.tsx – главный экран (Header, Banner, Categories, Products).
+* * cart/Cart.tsx – корзина, кнопка оформления заказа.
+ - profile/Profile.tsx – профиль, кнопка Logout, избранное.
 - - product/Product.tsx – детальная карточка товара.
 - - order/ – экран спасибо.
 
