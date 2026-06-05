@@ -2,7 +2,7 @@
 
 **Автор:** Мухаметов С.М.
 **Группа:**  ТОП-ИТ-101Б
-w
+
 
 ## Описание проекта
 
@@ -16,7 +16,7 @@ w
 ### Клиент
 <img width="auto" heigth="auto" src="./images/WidthViewClient.png"> [!Клиент]
 
-Папка app
+Папка app <br>
 <img width="auto" heigth="auto" src="./images/Folder_app.png">
 
 delivery-app-record/
@@ -66,12 +66,12 @@ delivery-app-record/
 
 * Экраны:
 
-- auth/Auth.tsx – форма входа/регистрации.
-- home/Home.tsx – главный экран (Header, Banner, Categories, Products).
-- cart/Cart.tsx – корзина, кнопка оформления заказа.
-- profile/Profile.tsx – профиль, кнопка Logout, избранное.
-- product/Product.tsx – детальная карточка товара.
-- order/ – экран спасибо.
+- - auth/Auth.tsx – форма входа/регистрации.
+- - home/Home.tsx – главный экран (Header, Banner, Categories, Products).
+- - cart/Cart.tsx – корзина, кнопка оформления заказа.
+- - profile/Profile.tsx – профиль, кнопка Logout, избранное.
+- - product/Product.tsx – детальная карточка товара.
+- - order/ – экран спасибо.
 
 * Хуки:
 
