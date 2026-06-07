@@ -30,6 +30,7 @@ delivery-app-record/<br>
 │ │ ├── store/ # Redux store + slices (корзина, избранное)<br>
 │ │ ├── types/ # TypeScript интерфейсы (auth, user)<br>
 │ │ └── utils/ # Утилиты (converPrice, getMediaSource)<br>
+└── другие файлы (линтеры, файлы окружения и настройки)<br>
 
 Файлы и структура 
 
@@ -92,50 +93,99 @@ delivery-app-record/<br>
 
 <img heigth="auto" width="auto" src="./images/FullViewServer.png">
 
-Папка src
-<img heig>
-Главный файл: server/src/main.ts
+Папка src<br>
+<img heigth="auto" wudth="auto" src="./images/Folder_src.png">
 
-setGlobalPrefix('api')
+delivery-app-record/<br>
+├── server/ # NestJS бэкенд<br>
+│ ├── prisma/ # Схема БД и seed-данные(заполнение бд)<br>
+│ ├── src/<br>
+│ │ ├── auth/ # Модуль аутентификации (JWT, стратегии)<br>
+│ │ ├── user/ # Пользователи (профиль, избранное, модели)<br>
+│ │ ├── product/ # Продукты<br>
+│ │ ├── category/ # Категории <br>
+│ │ ├── order/ # Заказы + интеграция со Stripe<br>
+│ │ ├── utisl/ # Утилиты (prisma.service, app.module)<br>
+│ │ └── main.ts # Главный файл (глобальные настройки)<br>
+│ └── uploads/ # Статические изображения<br>
+└── другие файлы (линтеры, файлы окружения и настройки)<br>
 
-useStaticAssets для папки uploads
+Файлы и структура 
 
-Глобальный фильтр исключений TokenExpiredFilter (превращает TokenExpiredError в 401)
+* Главный файл: server/src/main.ts - точка входа
 
-Модули:
+    &mdash; setGlobalPrefix('api')
+    &mdash; useStaticAssets для папки uploads
 
-AuthModule – логин, регистрация, выдача/обновление токенов.
+* Модули:
 
-UserModule – профиль, избранное.
+    &mdash; AuthModule – логин, регистрация, выдача/обновление токенов.
+    &mdash; UserModule – профиль, избранное.
+    &mdash; CategoryModule – категории (CRUD).
+    &mdash; ProductModule – продукты (CRUD, поиск по категориям).
+    &mdash; OrderModule – заказы, Stripe интеграция.
 
-CategoryModule – категории (CRUD).
+* Аутентификация:
 
-ProductModule – продукты (CRUD, поиск по категориям).
+    &mdash; jwt.strategy.ts – валидация JWT, ignoreExpiration
+    &mdash; auth.service.ts – login, register, issueTokens (access: 1h, refresh: 7d).
+    &mdash; Кастомный декоратор @Auth() – UseGuards(AuthGuard('jwt')).
+    &mdash; Декоратор @CurrentUser('id') – извлекает user.id из request.user.
 
-OrderModule – заказы, Stripe интеграция.
+* Работа с БД: PrismaService (в utisl/prisma.service.ts) + PostgreSQL.
 
-Аутентификация:
+    &mdash; Модели: User, Product, Category, Order, OrderItem.
+    &mdash; seed.ts – заполнение категорий, продуктов, демо-пользователя.
 
-jwt.strategy.ts – валидация JWT, ignoreExpiration: false, возвращает null → 401.
+* Заказы и Stripe:
 
-auth.service.ts – login, register, issueTokens (access: 1h, refresh: 7d).
+    &mdash; order.controller.ts – POST /orders (с @Auth()), принимает OrderDto (items).
+    &mdash; order.service.ts – вычисляет total из items (цены в центах), создаёт заказ в БД, затем создаёт PaymentIntent в Stripe с amount: total (total уже в центах – исправлено), возвращает clientSecret.
+    &mdash; Stripe инициализируется с process.env.STRIPE_SECRET_KEY.
+    &mdash;Статика: ServeStaticModule раздаёт папку uploads по /uploads.
 
-Кастомный декоратор @Auth() – UseGuards(AuthGuard('jwt')).
 
-Декоратор @CurrentUser('id') – извлекает user.id из request.user.
 
-Работа с БД: PrismaService (в utisl/prisma.service.ts).
+## Как выглядит приложение / ui
 
-Модели: User, Product, Category, Order, OrderItem.
+### Экран авторизации<br><br>
+<img heigth="auto" width="auto" src="./images/auth_screen.png">
+<br><br>
 
-seed.ts – заполнение категорий, продуктов, демо-пользователя.
+### Экран "Дома"<br><br>
+<img heigth="auto" width="auto" src="./images/home_screen.png">
+<br><br>
 
-Заказы и Stripe:
+### Экран "Любимого"<br><br>
+<img heigth="auto" width="auto" src="./images/favourite_screen.png">
+<br><br>
 
-order.controller.ts – POST /orders (с @Auth()), принимает OrderDto (items).
+### Экран "поиска"<br><br>
+<img heigth="auto" width="auto" src="./images/find_screen.png">
+<br><br>
 
-order.service.ts – вычисляет total из items (цены в центах), создаёт заказ в БД, затем создаёт PaymentIntent в Stripe с amount: total (total уже в центах – исправлено), возвращает clientSecret.
+### Экран "всех товаров"<br><br>
+<img heigth="auto" width="auto" src="./images/explorer_screen.png">
+<br><br>
 
-Stripe инициализируется с process.env.STRIPE_SECRET_KEY.
+### Экран "всех товаров"<br><br>
+<img heigth="auto" width="auto" src="./images/profile_screen.png">
+<br><br>
 
-Статика: ServeStaticModule раздаёт папку uploads по /uploads.
+### Экран "Корзины"<br><br>
+<img heigth="auto" width="auto" src="./images/cart_screen.png">
+<br><br>
+
+### Экран "Спасибо" после успешной оплаты<br><br>
+<img heigth="auto" width="auto" src="./images/thanks_screen.png">
+<br><br>
+
+
+## Функционал
+
+* Аутентификация: регистрация, логин, выход, автоматическое обновление токенов.
+* Каталог: отображение категорий с картинками, продуктов.
+* Корзина: добавление/удаление товаров, изменение количества, сохранение после перезапуска.
+* Оформление заказа: формирование заказа, создание PaymentIntent в Stripe, открытие платежного листа.
+* Профиль: просмотр, избранное (добавление/удаление).
+* Умный поиск товара
