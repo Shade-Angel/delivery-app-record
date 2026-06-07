@@ -189,3 +189,71 @@ delivery-app-record/<br>
 * Оформление заказа: формирование заказа, создание PaymentIntent в Stripe, открытие платежного листа.
 * Профиль: просмотр, избранное (добавление/удаление).
 * Умный поиск товара
+
+
+## Инструкция по установки 
+
+### 1. Создайте папку для проекта и перейдите в неё (любое название для папки можно выбрать)
+    mkdir delivery-app-record && cd delivery-app-record
+
+### 2. Инициализируйте пустой репозиторий
+    git init
+
+### 3. Добавьте удалённый репозиторий
+    git remote add origin https://github.com/Shade-Angel/delivery-app-record.git
+
+### 4. Включите sparse-checkout
+    git sparse-checkout init --cone
+
+### 5. Укажите, какие папки нужны
+    git sparse-checkout set server client
+
+### 6. Скачайте только эти папки
+    git pull origin main
+<br><br><br>
+
+### Если хотите полностью скачать проект
+
+    git clone https://github.com/Shade-Angel/delivery-app-record.git <br>
+    cd delivery-app-record
+
+
+### Установка зависимостей
+* Сервер (NestJS) не забудьте установить бд PostgreSQL ( https://www.postgresql.org/download/windows/ )
+    cd server
+    yarn install
+* Клиент (React Native / Expo)
+    cd ../client
+    yarn install
+
+### Настройка переменных окружения 
+    создайте файлы .env (cliend, server)
+
+### Запуск
+* Бэкенд (из папки server)
+    yarn start:dev
+    Сервер запустится на http://localhost:4200
+
+* Фронтенд (из папки client)
+    npx expo start
+    выйдут подсказки следуйте им
+
+### Сборка APK
+Из папки client выполните:
+
+1. Prebuild
+bash
+npx expo prebuild -p android --clean
+2. Сборка через Android Studio
+Откройте папку client/android в Android Studio(нужно скачать https://developer.android.com/studio)
+
+Дождитесь синхронизации Gradle
+    Build -> Build Bundle(s) / APK(s) -> Build APK(s)
+
+
+## Что можно добавить или реализовать
+* Webhook Stripe – для подтверждения оплаты и обновления статуса заказа.
+* Админ понель или роль администратора с расширенными возможностями
+* Обработка ошибок на клиенте – более дружелюбные сообщения.
+* Юнит-тесты.
+* Добавить в профиль возможность менять тему ( черно-белое или другие варианты ), язык интерфейса через выбор
