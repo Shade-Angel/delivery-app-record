@@ -6,7 +6,7 @@
 
 ## Описание проекта
 
-Мобильное приложение что-то среднее между самокатом и kfc  
+Мобильное клиентно-серверное  приложение (монолит) , по функционалу что-то среднее между самокатом и kfc  
 Пользователь может просматривать каталог товаров, добавлять их в корзину, оформлять заказ и оплачивать через Stripe (в данном случае в тестовом режиме).  
 Приложение имеет полноценную JWT-аутентификацию с обновлением токенов, историю заказов и выбором избранного.
 
@@ -35,51 +35,107 @@ delivery-app-record/<br>
 
 * Точка входа: client/App.tsx
 
-- Обёртки: QueryClientProvider (React Query), Provider (Redux), PersistGate (Redux Persist), AuthProvider (кастомный), SafeAreaProvider, StripeProvider.
-- Улитка: Navigation компонент.
+    &mdash; Обёртки: QueryClientProvider (React Query), Provider (Redux), PersistGate (Redux Persist), AuthProvider (кастомный), SafeAreaProvider, StripeProvider<br>
+    &mdash; Улитка: Navigation компонент.<br>
 
 * Навигация: client/app/navigation/
 
-- Navigation.tsx – главный контейнер, проверяет user и рендерит BottomMenu.
-- PrivateNavigator.tsx – условный рендеринг (Auth или экраны).
-- routes.ts – список экранов (Home, Favorites, Cart, Profile, etc.).
+    &mdash; Navigation.tsx – главный контейнер, проверяет user и рендерит BottomMenu.<br>
+    &mdash; PrivateNavigator.tsx – условный рендеринг (Auth или экраны).<br>
+    &mdash; routes.ts – список экранов (Home, Favorites, Cart, Profile, etc.).<br>
 
 * Управление состоянием:
 
-- Redux Toolkit – корзина (cart.slice), избранное (favorites.slice).
-- React Query – для данных с сервера (продукты, категории, профиль).
-- Redux Persist – сохранение корзины и избранного в AsyncStorage.
+    &mdash; Redux Toolkit – корзина (cart.slice), избранное (favorites.slice).<br>
+    &mdash; React Query – для данных с сервера (продукты, категории, профиль).<br>
+    &mdash; Redux Persist – сохранение корзины и избранного в AsyncStorage.<br>
 
 * Сервисы API: client/app/services/
 
-- order.service.ts, product.service.ts, category.service.ts, user.service.ts, auth.service.ts.
-- api/request.api.ts – обёртка над Axios с тостами.
-- api/interceptors.api.ts – перехватчик: добавляет Bearer токен, обрабатывает 401 и обновление токенов.
-- api/helper.auth.ts – функция getNewTokens(запрашивает у сервера токены).
-- auth/auth.helper.ts – работа с SecureStore (сохранение/чтение токенов).
+    &mdash; order.service.ts, product.service.ts, category.service.ts, user.service.ts, auth.service.ts.<br>
+    &mdash; api/request.api.ts – обёртка над Axios с тостами.<br>
+    &mdash; api/interceptors.api.ts – перехватчик: добавляет Bearer токен, обрабатывает 401 и обновление токенов.<br>
+    &mdash; api/helper.auth.ts – функция getNewTokens(запрашивает у сервера токены).<br>
+    &mdash; auth/auth.helper.ts – работа с SecureStore (сохранение/чтение токенов).<br>
 
 * Аутентификация:
 
-- AuthProvider.tsx – контекст с user, isLoading, проверка токена при старте.
-- useCheckAuth.ts – проверяет refresh token при смене маршрута.
-- useAuth.ts – хук для доступа к контексту.
+    &mdash; AuthProvider.tsx – контекст с user, isLoading, проверка токена при старте.<br>
+    &mdash; useCheckAuth.ts – проверяет refresh token при смене маршрута.<br>
+    &mdash; useAuth.ts – хук для доступа к контексту.<br>
 
 * Экраны:
 
-* - auth/Auth.tsx – форма входа/регистрации.
-* - home/Home.tsx – главный экран (Header, Banner, Categories, Products).
-* * cart/Cart.tsx – корзина, кнопка оформления заказа.
- - profile/Profile.tsx – профиль, кнопка Logout, избранное.
-- - product/Product.tsx – детальная карточка товара.
-- - order/ – экран спасибо.
+    &mdash; auth/Auth.tsx – форма входа/регистрации.<br>
+    &mdash; home/Home.tsx – главный экран (Header, Banner, Categories, Products).<br>
+    &mdash; cart/Cart.tsx – корзина, кнопка оформления заказа.<br>
+    &mdash; profile/Profile.tsx – профиль, кнопка Logout, избранное.<br>
+    &mdash; product/Product.tsx – детальная карточка товара.<br>
+    &mdash; order/ – экран спасибо.<br>
 
 * Хуки:
 
-- useCart.ts – доступ к корзине из Redux.
-- useCheckout.ts – оформление заказа (сборка данных, вызов Stripe).
-- useProfile.ts – запрос профиля через React Query.
+    &mdash; useCart.ts – доступ к корзине из Redux.<br>
+    &mdash; useCheckout.ts – оформление заказа (сборка данных, вызов Stripe).<br>
+    &mdash; useProfile.ts – запрос профиля через React Query.<br>
 
 * Утилиты:
 
-- converPrice.ts – форматирует как доллары с центами.
-- getMediaSource - помогает с фотографиями, "строит пути"
+    &mdash; converPrice.ts – форматирует как доллары с центами.<br>
+    &mdash; getMediaSource - помогает с фотографиями, "строит пути"<br>
+
+* Стилизация: NativeWind (Tailwind CSS).
+
+
+
+### Серверная часть (NestJS)
+
+<img heigth="auto" width="auto" src="./images/FullViewServer.png">
+
+Папка src
+<img heig>
+Главный файл: server/src/main.ts
+
+setGlobalPrefix('api')
+
+useStaticAssets для папки uploads
+
+Глобальный фильтр исключений TokenExpiredFilter (превращает TokenExpiredError в 401)
+
+Модули:
+
+AuthModule – логин, регистрация, выдача/обновление токенов.
+
+UserModule – профиль, избранное.
+
+CategoryModule – категории (CRUD).
+
+ProductModule – продукты (CRUD, поиск по категориям).
+
+OrderModule – заказы, Stripe интеграция.
+
+Аутентификация:
+
+jwt.strategy.ts – валидация JWT, ignoreExpiration: false, возвращает null → 401.
+
+auth.service.ts – login, register, issueTokens (access: 1h, refresh: 7d).
+
+Кастомный декоратор @Auth() – UseGuards(AuthGuard('jwt')).
+
+Декоратор @CurrentUser('id') – извлекает user.id из request.user.
+
+Работа с БД: PrismaService (в utisl/prisma.service.ts).
+
+Модели: User, Product, Category, Order, OrderItem.
+
+seed.ts – заполнение категорий, продуктов, демо-пользователя.
+
+Заказы и Stripe:
+
+order.controller.ts – POST /orders (с @Auth()), принимает OrderDto (items).
+
+order.service.ts – вычисляет total из items (цены в центах), создаёт заказ в БД, затем создаёт PaymentIntent в Stripe с amount: total (total уже в центах – исправлено), возвращает clientSecret.
+
+Stripe инициализируется с process.env.STRIPE_SECRET_KEY.
+
+Статика: ServeStaticModule раздаёт папку uploads по /uploads.
