@@ -260,3 +260,17 @@ npx expo prebuild -p android --clean
 
 ## Авторы 
 * Shade-Angel
+* @TeaCoder52(youtube) приложение сделанно по его гайдам
+
+## Рекомнадции
+* книга "Изучаем паттерны проектирования JavaScript" Эдди Османи
+* книга "Learning React Native" Bonnie Eisenman
+* книга "Programming TypeScript" Boris Cherny
+
+## Полезные ссылки
+
+* React Navigation https://reactnavigation.org/
+* NestJS https://docs.nestjs.com/
+* Prisma https://www.prisma.io/
+* React Native https://reactnative.dev/
+* Expo https://docs.expo.dev/
