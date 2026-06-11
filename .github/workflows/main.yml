@@ -21,6 +21,8 @@ jobs:
           cache-dependency-path: './server/yarn.lock'
       - name: Install dependencies
         run: yarn install --frozen-lockfile
+      - name: Generate Prisma Client
+        run: yarn prisma generate
       - name: Run tests
         run: echo "test not yet"
       - name: Build
